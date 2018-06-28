@@ -26,7 +26,9 @@ int main(void)
     }
 
     // Call the png writer routine
-#error Add here the correct call for png writing
+//#error Add here the correct call for png writing
+	//char filename[] = "test.png";
+	error_code = save_png(&array[0][0], NX, NY, "test.png", 'c'); //&filename[0]
 
     if (error_code == 0) {
         printf("Wrote the output file ex5.png\n");

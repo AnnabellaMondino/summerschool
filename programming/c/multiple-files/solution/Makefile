@@ -14,7 +14,7 @@ endif
 
 
 EXE=libpng
-OBJS=pngwriter.o libpng.c
+OBJS=pngwriter.o libpng.o
 LIBS=-L/appl/opt/libpng/lib -lpng -lz
 
 all: $(EXE)
