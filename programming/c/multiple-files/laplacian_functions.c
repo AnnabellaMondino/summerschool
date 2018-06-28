@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include "pngwriter.h"
 
-#define NX 258
-#define NY 258
-
 #define DX 0.01
 #define DY 0.01
 
@@ -14,8 +11,8 @@ int main(void)
 {
     	int i, j;
 	temp_field T;
-	T.Nx	= 5;
-	T.Ny	= 8;
+	T.Nx	= NX;
+	T.Ny	= NY;
 	T.dx	= 0.01;
 	T.dy	= 0.01;
 	T.dx2	= T.dx*T.dx;
@@ -24,7 +21,7 @@ int main(void)
 	array(&T);
 
 	double lapla[T.Nx*T.Ny];
-	laplacian(&T,&lapla);
+	laplacian(&T,&lapla[0]);
 
  return 0;
 }
