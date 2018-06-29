@@ -5,9 +5,16 @@ int main(int argc, char *argv[])
     int a, b, c;
     // declare a pointer variable and assign it to address of e.g. a
 
+	a = 20;
+	b = 2;
+	int* p;
+
+	p = &b;
+
     // Evaluate expressions using both the original and the pointer variable
     // and investigate the value / value pointed to
 
-
+	b -=20;
+	printf("%d\t%d\n",b,*p);
     return 0;
 }

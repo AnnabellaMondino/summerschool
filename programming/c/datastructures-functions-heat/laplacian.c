@@ -8,6 +8,8 @@
 #define DX 0.01
 #define DY 0.01
 
+#include "laplacian.h"
+
 int main(void)
 {
     int i, j, error_code;
@@ -15,8 +17,8 @@ int main(void)
     double laplacian[NX][NY];
 
     // First initalize the inner values to zero
-    for (i = 1; i < NX - 2; i++) {
-        for (j = 1; j < NY - 2; j++) {
+    for (i = 1; i < NX - 1; i++) { //CHANGE!
+        for (j = 1; j < NY - 1; j++) { //CHANGE!
             array[i][j] = 0.0;
         }
     }
@@ -42,18 +44,29 @@ int main(void)
 
     // Evaluate the Laplacian
     // *INDENT-OFF*
-#error Add the missing part
+//#error Add the missing part
+	for (i = 1; i < NX-1; i++){
+		for (j = 1; j < NY; j++){
+			double l1 = array[i-1][j] - 2.*array[i][j] + array[i+1][j];
+			l1 /= DX*DX;
+
+			double l2 = array[i][j-1] - 2.*array[i][j] + array[i][j+1];
+			l2 /= DY*DY;
+
+			laplacian[i][j] = l1 + l2;	
+		}
+	}
 
     // *INDENT-ON*
 
     // Call the png writer routine
-    error_code = save_png((double *) laplacian, NX, NY, "datastructures_functions_heat-a_b.png", 'c');
+/*    error_code = save_png((double *) laplacian, NX, NY, "datastructures_functions_heat-a_b.png", 'c');
 
     if (error_code == 0) {
         printf("Wrote the output file datastructures_functions_heat-a_b.png\n");
     } else {
         printf("Error while writing output file datastructures_functions_heat-a_b.png\n");
     }
-
+*/
     return 0;
 }

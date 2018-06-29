@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
     // TODO: Allocate memory for a 2D array (nx,ny). Remember to allocate
     // space also for a ghost layer around the real data.
-
+	t
     // Initialize field and print out the result
     init_field(&temperature, nx, ny);
     print_field(&temperature);
