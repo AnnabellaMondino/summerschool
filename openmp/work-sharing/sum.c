@@ -5,7 +5,7 @@
 int main(void)
 {
     double vecA[NX], vecB[NX], vecC[NX];
-    double sum;
+    double sum, sumcheck;
     int i;
 
     /* Initialization of the vectors */
@@ -25,6 +25,11 @@ int main(void)
                 printf("%lf\t", vecB[i]);
         }
         printf("\n");
+
+	sumcheck = 0.;
+	for (i=0; i<NX; i++){
+		sumcheck += vecA[i] + vecB[i];
+	}
 
     /* TODO:
      *   Implement here a parallelized version of vector addition,
@@ -49,6 +54,6 @@ int main(void)
         sum += vecC[i];
     }
     printf("Reduction sum: %18.16f\n", sum);
-
+	printf("Sum check: %18.16f\n",sumcheck);
     return 0;
 }
