@@ -86,7 +86,26 @@ void generate_field(field *temperature)
         malloc_2d(temperature->nx + 2, temperature->ny + 2);
 
     /* TODO: Initialize the values of temperature */
-#error Add field initialization
+//#error Add field initialization
+// Initialize first the zeros
+//#error Initialize the zeros for interior
+	for (i=1; i<(temperature->nx-1); i++){
+		for (j=1; j<(temperature->ny-1); j++){
+			temperature->data[i][j] = 0.;
+		}
+	}
+    // Initial conditions for left and right
+//#error add boundary conditions for left and right
+	for (i=0; i<temperature->nx; i++){
+		temperature->data[i][0] = 20.;
+		temperature->data[i][temperature->ny] = 70.;
+	}	
+    // and top and bottom boundaries
+//#error add boundary conditions for top and bottom
+	for (j=0; j<temperature->ny; j++){
+		temperature->data[0][j] = 85.;
+		temperature->data[temperature->nx-1][j] =5.;
+	}
 
 }
 

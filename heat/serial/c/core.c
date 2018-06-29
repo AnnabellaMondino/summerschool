@@ -10,7 +10,7 @@
 /* Update the temperature values using five-point stencil */
 void evolve(field *curr, field *prev, double a, double dt)
 {
-    int i, j;
+    int i, j;SS
     double dx2, dy2;
 
     /* Determine the temperature field at next time step
@@ -21,7 +21,8 @@ void evolve(field *curr, field *prev, double a, double dt)
 
     /* TODO: Add update loops for computing the new field values
              of 'curr' using field 'prev' */
-#error Add update loops
+//#error Add update loops
+	
 
 }
 
