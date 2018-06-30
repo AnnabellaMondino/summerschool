@@ -114,13 +114,13 @@ void generate_field(field *temperature)
 //#error add boundary conditions for left and right
 	for (i=0; i<temperature->nx+2; i++){
 		temperature->data[i][0] = 20.;
-		temperature->data[i][temperature->ny+2] = 70.;
+		temperature->data[i][temperature->ny+1] = 70.;
 	}	
     // and top and bottom boundaries
 //#error add boundary conditions for top and bottom
 	for (j=0; j<temperature->ny+2; j++){
 		temperature->data[0][j] = 85.;
-		temperature->data[temperature->nx+2][j] =5.;
+		temperature->data[temperature->nx+1][j] =5.;
 	}
 
 }
