@@ -80,6 +80,11 @@ void generate_field(field *temperature)
     double radius;
     int dx, dy;
 
+	radius = (double) temperature->nx/6.;
+	int center_x = temperature->nx/2;
+	int center_y = temperature->ny/2;
+
+
     /* Allocate the temperature array, note that
      * we have to allocate also the ghost layers */
     temperature->data =
@@ -89,22 +94,33 @@ void generate_field(field *temperature)
 //#error Add field initialization
 // Initialize first the zeros
 //#error Initialize the zeros for interior
-	for (i=1; i<(temperature->nx-1); i++){
-		for (j=1; j<(temperature->ny-1); j++){
+	for (i=1; i<(temperature->nx+1); i++){
+		for (j=1; j<(temperature->ny+1); j++){
 			temperature->data[i][j] = 0.;
 		}
 	}
+
+        for (i=1; i<(temperature->nx+1); i++){
+                for (j=1; j<(temperature->ny+1); j++){
+                        if ((i-center_x)*(i-center_x)+(j-center_y)*(j-center_y) <= radius*radius){
+				temperature->data[i][j] = 100.;
+			}else{
+				temperature->data[i][j] = 0.;
+			}
+                }
+        }
+
     // Initial conditions for left and right
 //#error add boundary conditions for left and right
-	for (i=0; i<temperature->nx; i++){
+	for (i=0; i<temperature->nx+2; i++){
 		temperature->data[i][0] = 20.;
-		temperature->data[i][temperature->ny] = 70.;
+		temperature->data[i][temperature->ny+2] = 70.;
 	}	
     // and top and bottom boundaries
 //#error add boundary conditions for top and bottom
-	for (j=0; j<temperature->ny; j++){
+	for (j=0; j<temperature->ny+2; j++){
 		temperature->data[0][j] = 85.;
-		temperature->data[temperature->nx-1][j] =5.;
+		temperature->data[temperature->nx+2][j] =5.;
 	}
 
 }
