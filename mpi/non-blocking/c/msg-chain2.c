@@ -47,11 +47,11 @@ int main(int argc, char *argv[])
     /* Send and receive messages as defined in exercise */
     /* TODO: Implement the communication using non-blocking
              sends and receives */
-	MPI_Isend(message,size,MPI_INT,destination,myid+1,MPI_COMM_WORLD,&requests[1]);
-	MPI_Irecv(receiveBuffer,size,MPI_INT,source,myid,MPI_COMM_WORLD,&requests[0]);
+	MPI_Send(message,size,MPI_INT,destination,myid+1,MPI_COMM_WORLD);
+	MPI_Recv(receiveBuffer,size,MPI_INT,source,myid,MPI_COMM_WORLD,&statuses[0]);
 
-	MPI_Wait(&requests[0],&statuses[0]);
-	MPI_Wait(&requests[1],&statuses[1]);
+	//MPI_Wait(&requests[0],&statuses[0]);
+	//MPI_Wait(&requests[1],&statuses[1]);
 
     printf("Sender: %d. Sent elements: %d. Tag: %d. Receiver: %d\n", myid,
            size, myid + 1, destination);

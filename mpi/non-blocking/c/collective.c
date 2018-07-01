@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     int sendbuf[2 * NTASKS], recvbuf[2 * NTASKS];
     int printbuf[2 * NTASKS * NTASKS];
     MPI_Request request;
+	MPI_Status status;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &ntasks);
@@ -34,12 +35,13 @@ int main(int argc, char *argv[])
 
     /* TODO: use a single collective communication call (and maybe prepare
      *       some parameters for the call) */
+	MPI_Ibcast(sendbuf,2*NTASKS,MPI_INT,0,MPI_COMM_WORLD,&request);
 
     /* TODO: remember to complete the collective operation */
-
+	MPI_Wait(&request,&status);
     /* Print data that was received */
     /* TODO: add correct buffer */
-    print_buffers(printbuf, ..., 2 * NTASKS);
+    print_buffers(printbuf, sendbuf, 2 * NTASKS);
 
     MPI_Finalize();
     return 0;

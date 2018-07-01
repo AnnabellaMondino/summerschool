@@ -6,14 +6,15 @@ COMMONDIR=../../../heat/common
 
 ifeq ($(COMP),cray)
 CC=cc
-CCFLAGS=-O3 -I/appl/opt/libpng/include -I$(COMMONDIR)
+CCFLAGS=-g -Wall -I/appl/opt/libpng/include -I$(COMMONDIR)
+#-fsanitize=address
 LDFLAGS=-L/appl/opt/libpng/lib
 LIBS=-lpng -lz
 endif
 
 ifeq ($(COMP),gnu)
 CC=gcc
-CCFLAGS=-O3 -Wall -I$(COMMONDIR)
+CCFLAGS=-g -Og -fsanitize=address -Wall -I$(COMMONDIR)
 LDFLAGS=
 LIBS=-lpng
 endif
