@@ -19,7 +19,9 @@ int main(int argc, char *argv[])
         char label[2];
     } particle;
 
-	    particle particles[n];
+	particle particles[n];
+	int psize;
+	psize = sizeof(particles[0]);
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &myid);
 
@@ -36,7 +38,7 @@ int main(int argc, char *argv[])
     /* TODO (c): define the datatype for the struct particle  using MPI_Type_create_struct
        You can use MPI_Get_address to compute offsets.
     */
-	MPI_Datatype type[3] = {MPI_FLOAT, MPI_INT, MPI_CHAR};
+/*	MPI_Datatype type[3] = {MPI_FLOAT, MPI_INT, MPI_CHAR};
 	//blocklen[3] = {3,1,2};
 	blocklen[0] = 3;
         blocklen[1] = 1;
@@ -51,32 +53,32 @@ int main(int argc, char *argv[])
 	disp[0] = 0;
 	
 	MPI_Type_create_struct(3,blocklen,disp,type,&temptype);
-	MPI_Type_commit(&temptype);
+	MPI_Type_commit(&temptype); */
     /* TODO (c): check extent (not really necessary on most platforms) That is,
      * check that extent is identical to the distance between two consequtive
      * structs in an array
      * Tip, use MPI_Type_get_extent and  MPI_Get_address
      */
-	MPI_Type_get_extent(temptype,&lb,&extent);
+/*	MPI_Type_get_extent(temptype,&lb,&extent);
 	MPI_Get_address(particles[0].coords, &disp[0]);
 	MPI_Get_address(&particles[1].coords[0], &disp[1]);
 
-    if (extent != (dist[1] - dist[0])) {
+    if (extent != (dist[1] - dist[0])) { */
         /*TODO (c), resize particle type to correct extent */
-	MPI_Type_create_resized(temptype,0, sizeof(particles[0]),&particletype);
+/*	MPI_Type_create_resized(temptype,0, sizeof(particles[0]),&particletype);
 	MPI_Type_commit(&particletype);
-	MPI_Type_free(&temptype);
-    }
+	MPI_Type_free(&temptype); 
+    } */
 
     /* communicate using the created particletype */
     t1 = MPI_Wtime();
     if (myid == 0) {
         for (i = 0; i < reps; i++) {
-            MPI_Send(particles, n, particletype, 1, i, MPI_COMM_WORLD);
+            MPI_Send(particles, n*psize, MPI_BYTE, 1, i, MPI_COMM_WORLD);
         }
     } else if (myid == 1) {
         for (i = 0; i < reps; i++) {
-            MPI_Recv(particles, n, particletype, 0, i, MPI_COMM_WORLD,
+            MPI_Recv(particles, n*psize, MPI_BYTE , 0, i, MPI_COMM_WORLD,
                      MPI_STATUS_IGNORE);
 	}
     }

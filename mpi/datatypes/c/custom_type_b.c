@@ -39,13 +39,18 @@ int main(int argc, char **argv)
 
     //TODO: Create datatype that describes one column. Use MPI_Type_vector.
 	MPI_Datatype column;
-	MPI_Type_vector(8, 1, 8, MPI_INT, &column);
+	int disp[4], blocken[4];
+	for (i=0; i<4;i++){
+		disp[i] = 16*i + i;
+		blocken[i] = i + 1;
+	}
+	MPI_Type_indexed(4, blocken, disp, MPI_INT, &column);
 	MPI_Type_commit(&column);
     //TODO: Send first column of matrix form rank 0 to rank 1
 	if (rank==0){
-		MPI_Send(&array[0][1], 1, column,1,0, MPI_COMM_WORLD);
+		MPI_Send(&array[0][0], 1, column,1,0, MPI_COMM_WORLD);
 	} else if (rank==1){
-		MPI_Recv(&array[0][1], 1, column,0,0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&array[0][0], 1, column,0,0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
 	}
     //TODO: free datatype
 	MPI_Type_free(&column);
